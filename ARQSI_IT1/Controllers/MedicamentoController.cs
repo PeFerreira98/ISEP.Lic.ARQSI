@@ -26,7 +26,14 @@ namespace ARQSI_IT1.Controllers
         {
             return _context.Medicamento;
         }
-
+        /*
+        // GET: api/Medicamento/?nome=Brufen
+        [HttpGet("?nome={nome}")]
+        public IEnumerable<Medicamento> GetMedicamento([FromRoute] string nome)
+        {
+            return _context.Medicamento.Where(m => m.Nome == nome);
+        }
+        */
         // GET: api/Medicamento/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMedicamento([FromRoute] int id)
