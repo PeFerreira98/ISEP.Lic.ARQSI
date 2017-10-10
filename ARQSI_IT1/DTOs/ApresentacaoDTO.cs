@@ -11,5 +11,6 @@ namespace ARQSI_IT1.DTOs
         public string MedicamentoNome { get; set; }
         public double MedicamentoConcentracao { get; set; }
         public double PosologiaQuantidade { get; set; }
+        public string FarmacoNome { get; set; }
     }
 }

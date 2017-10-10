@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ARQSI_IT1.DTOs
+namespace ARQSI_IT1.Models.Enum
 {
-    public class FarmacoDTO
+    public enum Forma
     {
-        public string Nome { get; set; }
+        Xarope, Intravenoso, Comprimido, Supositorio
     }
 }

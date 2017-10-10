@@ -54,43 +54,38 @@ namespace ARQSI_IT1.Data
             }
             _context.SaveChanges();
 
-
-// Apresentacao Populate
-            var apresentacoes = new Apresentacao[]
-            {
-                new Apresentacao{Forma="Comprimido", MedicamentoId=1, PosologiaId=1},
-                new Apresentacao{Forma="Comprimido", MedicamentoId=2, PosologiaId=1},
-                new Apresentacao{Forma="Comprimido", MedicamentoId=3, PosologiaId=2},
-                new Apresentacao{Forma="Comprimido", MedicamentoId=4, PosologiaId=2},
-                new Apresentacao{Forma="Comprimido", MedicamentoId=5, PosologiaId=3},
-                new Apresentacao{Forma="Comprimido", MedicamentoId=6, PosologiaId=4},
-                new Apresentacao{Forma="Comprimido", MedicamentoId=7, PosologiaId=5},
-                new Apresentacao{Forma="Comprimido", MedicamentoId=8, PosologiaId=6}
-            };
-            foreach (Apresentacao apresentacao in apresentacoes)
-            {
-                _context.Apresentacao.Add(apresentacao);
-            }
-            _context.SaveChanges();
-
-
 // Farmaco Populate
             var farmacos = new Farmaco[]
             {
-                new Farmaco{Nome="Ibuprofeno", ApresentacaoId=1},
-                new Farmaco{Nome="Ibuprofeno", ApresentacaoId=2},
-                new Farmaco{Nome="Paracetamol", ApresentacaoId=3},
-                new Farmaco{Nome="Paracetamol", ApresentacaoId=4},
-                new Farmaco{Nome="Ifenprodil", ApresentacaoId=5},
-                new Farmaco{Nome="Factor VIII", ApresentacaoId=6},
-                new Farmaco{Nome="Vigabatrina", ApresentacaoId=7},
-                new Farmaco{Nome="Bicarbonato de Sodio", ApresentacaoId=8},
-                new Farmaco{Nome="Acido Tartarico", ApresentacaoId=8},
-                new Farmaco{Nome="Bitartarato de Potassio", ApresentacaoId=8},
+                new Farmaco{Nome="Ibuprofeno"},
+                new Farmaco{Nome="Paracetamol"},
+                new Farmaco{Nome="Ifenprodil"},
+                new Farmaco{Nome="Factor VIII"},
+                new Farmaco{Nome="Vigabatrina"},
+                new Farmaco{Nome="Bicarbonato de Sodio + Acido Tartarico + Bitartarato de Potassio"}
             };
             foreach (Farmaco farmaco in farmacos)
             {
                 _context.Farmaco.Add(farmaco);
+            }
+            _context.SaveChanges();
+
+// Apresentacao Populate
+            var apresentacoes = new Apresentacao[]
+            {
+                new Apresentacao{Forma="Comprimido", FarmacoId=1, MedicamentoId=1, PosologiaId=1},
+                new Apresentacao{Forma="Comprimido", FarmacoId=1, MedicamentoId=2, PosologiaId=1},
+                new Apresentacao{Forma="Comprimido", FarmacoId=2, MedicamentoId=3, PosologiaId=2},
+                new Apresentacao{Forma="Comprimido", FarmacoId=2, MedicamentoId=4, PosologiaId=2},
+                new Apresentacao{Forma="Supositorio", FarmacoId=2, MedicamentoId=4, PosologiaId=2},
+                new Apresentacao{Forma="Comprimido", FarmacoId=3, MedicamentoId=5, PosologiaId=3},
+                new Apresentacao{Forma="Comprimido", FarmacoId=4, MedicamentoId=6, PosologiaId=4},
+                new Apresentacao{Forma="Comprimido", FarmacoId=5, MedicamentoId=7, PosologiaId=5},
+                new Apresentacao{Forma="Comprimido", FarmacoId=6, MedicamentoId=8, PosologiaId=6}
+            };
+            foreach (Apresentacao apresentacao in apresentacoes)
+            {
+                _context.Apresentacao.Add(apresentacao);
             }
             _context.SaveChanges();
         }
