@@ -26,14 +26,7 @@ namespace ARQSI_IT1.Controllers
         {
             return _context.Medicamento;
         }
-        /*
-        // GET: api/Medicamento/?nome=Brufen
-        [HttpGet("?nome={nome}")]
-        public IEnumerable<Medicamento> GetMedicamento([FromRoute] string nome)
-        {
-            return _context.Medicamento.Where(m => m.Nome == nome);
-        }
-        */
+
         // GET: api/Medicamento/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMedicamento([FromRoute] int id)
@@ -53,6 +46,26 @@ namespace ARQSI_IT1.Controllers
             return Ok(medicamento);
         }
 
+        // GET: api/Medicamento/Brufen
+        // Incomplete (need 2 return list/enumerable)
+        [HttpGet("{nome}")]
+        public async Task<IActionResult> GetMedicamento([FromRoute] string nome)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Nome.Equals(nome));
+
+            if (medicamento == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(medicamento);
+        }
+
         // GET: api/Medicamento/5/Apresentacoes
         [HttpGet("{id}/Apresentacoes")]
         public IEnumerable<Apresentacao> GetApresentacoesMedicamento([FromRoute] int id)
@@ -60,6 +73,7 @@ namespace ARQSI_IT1.Controllers
             return _context.Apresentacao
                 .Include(m => m.Medicamento)
                 .Include(m => m.Posologia)
+                .Include(m => m.Farmaco)
                 .Where(m => m.MedicamentoId == id);
         }
 
@@ -67,17 +81,17 @@ namespace ARQSI_IT1.Controllers
         [HttpGet("{id}/Posologias")]
         public IEnumerable<Posologia> GetPosologiasMedicamento([FromRoute] int id)
         {
-            List<Posologia> posologias = new List<Posologia>(); 
+            List<Posologia> posologiasList = new List<Posologia>(); 
 
             foreach(var apresentacao in _context.Apresentacao.Where(a => a.MedicamentoId == id))
             {
-                foreach (var poso in _context.Posologia.Where(p => p.Id == apresentacao.PosologiaId))
+                foreach (var posologia in _context.Posologia.Where(p => p.Id == apresentacao.PosologiaId))
                 {
-                    posologias.Add(poso);
+                    posologiasList.Add(posologia);
                 }
             }
 
-            return posologias;
+            return posologiasList;
         }
 
         // PUT: api/Medicamento/5

@@ -26,6 +26,7 @@ namespace ARQSI_IT1.Controllers
         {
             return _context.Apresentacao
                 .Include(m => m.Medicamento)
+                .Include(m => m.Farmaco)
                 .Include(m => m.Posologia);
         }
 
@@ -40,6 +41,7 @@ namespace ARQSI_IT1.Controllers
 
             var apresentacao = await _context.Apresentacao
                 .Include(m => m.Medicamento)
+                .Include(m => m.Farmaco)
                 .Include(m => m.Posologia)
                 .SingleOrDefaultAsync(m => m.Id == id);
 

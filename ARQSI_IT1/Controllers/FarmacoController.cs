@@ -24,8 +24,7 @@ namespace ARQSI_IT1.Controllers
         [HttpGet]
         public IEnumerable<Farmaco> GetFarmaco()
         {
-            return _context.Farmaco
-                .Include(m => m.Apresentacao);
+            return _context.Farmaco;
         }
 
         // GET: api/Farmaco/5
@@ -37,9 +36,27 @@ namespace ARQSI_IT1.Controllers
                 return BadRequest(ModelState);
             }
 
-            var farmaco = await _context.Farmaco
-                .Include(m => m.Apresentacao)
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var farmaco = await _context.Farmaco.SingleOrDefaultAsync(m => m.Id == id);
+
+            if (farmaco == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(farmaco);
+        }
+
+        // GET: api/Farmaco/Ibuprofeno
+        // Incomplete (need 2 return list/enumerable)
+        [HttpGet("{nome}")]
+        public async Task<IActionResult> GetFarmaco([FromRoute] string nome)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var farmaco = await _context.Farmaco.SingleOrDefaultAsync(m => m.Nome.Equals(nome));
 
             if (farmaco == null)
             {
@@ -53,33 +70,43 @@ namespace ARQSI_IT1.Controllers
         [HttpGet("{id}/medicamentos")]
         public IEnumerable<Medicamento> GetMedicamentosFarmaco([FromRoute] int id)
         {
-            var farmaco = _context.Farmaco
-                .Include(m => m.Apresentacao)
-                .Single(f => f.Id == id);
+            List<Medicamento> medicamentosList = new List<Medicamento>();
 
-            return _context.Medicamento.Where(m => m.Id == farmaco.Apresentacao.MedicamentoId);
+            foreach (var apresentacao in _context.Apresentacao
+                .Include(a => a.Medicamento)
+                .Where(a => a.FarmacoId == id))
+            {
+                    medicamentosList.Add(apresentacao.Medicamento);
+            }
+
+            return medicamentosList;
         }
 
         // GET: api/Farmaco/5/Apresentacoes
         [HttpGet("{id}/apresentacoes")]
         public IEnumerable<Apresentacao> GetApresentacoesFarmaco([FromRoute] int id)
         {
-            var farmaco = _context.Farmaco
-                .Include(m => m.Apresentacao)
-                .Single(f => f.Id == id);
-
-            return _context.Apresentacao.Where(m => m.Id == farmaco.ApresentacaoId);
+            return _context.Apresentacao
+                .Include(m => m.Medicamento)
+                .Include(m => m.Farmaco)
+                .Include(m => m.Posologia)
+                .Where(m => m.FarmacoId == id);
         }
         
         // GET: api/Farmaco/5/Posologias
         [HttpGet("{id}/posologias")]
         public IEnumerable<Posologia> GetPosologiasFarmaco([FromRoute] int id)
         {
-            var farmaco = _context.Farmaco
-                .Include(m => m.Apresentacao)
-                .Single(f => f.Id == id);
+            List<Posologia> posologiasList = new List<Posologia>();
 
-            return _context.Posologia.Where(m => m.Id == farmaco.Apresentacao.PosologiaId);
+            foreach (var apresentacao in _context.Apresentacao
+                .Include(a => a.Posologia)
+                .Where(a => a.FarmacoId == id))
+            {
+                    posologiasList.Add(apresentacao.Posologia);
+            }
+
+            return posologiasList;
         }
         
         // PUT: api/Farmaco/5

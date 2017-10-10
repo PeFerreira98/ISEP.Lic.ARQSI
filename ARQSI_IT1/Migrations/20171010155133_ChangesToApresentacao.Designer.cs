@@ -11,9 +11,10 @@ using System;
 namespace ARQSI_IT1.Migrations
 {
     [DbContext(typeof(ARQSI_IT1Context))]
-    partial class ARQSI_IT1ContextModelSnapshot : ModelSnapshot
+    [Migration("20171010155133_ChangesToApresentacao")]
+    partial class ChangesToApresentacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

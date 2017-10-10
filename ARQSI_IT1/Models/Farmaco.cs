@@ -9,8 +9,5 @@ namespace ARQSI_IT1.Models
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public int ApresentacaoId { get; set; }
-        public Apresentacao Apresentacao { get; set; }
-
     }
 }
