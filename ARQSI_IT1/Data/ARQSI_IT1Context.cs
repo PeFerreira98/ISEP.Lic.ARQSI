@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
+using ARQSI_IT1.Models.Account;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ARQSI_IT1.Models
 {
-    public class ARQSI_IT1Context : DbContext
+    public class ARQSI_IT1Context : IdentityDbContext<UserEntity>
     {
         public ARQSI_IT1Context (DbContextOptions<ARQSI_IT1Context> options)
             : base(options)
