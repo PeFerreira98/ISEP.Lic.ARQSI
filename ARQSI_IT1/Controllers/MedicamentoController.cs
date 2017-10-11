@@ -36,7 +36,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Medicamento/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetMedicamento([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -55,23 +55,17 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Medicamento/Brufen
-        // Incomplete (need 2 return list/enumerable)
         [HttpGet("{nome}")]
-        public async Task<IActionResult> GetMedicamento([FromRoute] string nome)
+        public IEnumerable<MedicamentoDTO> GetMedicamentoByName([FromRoute] string nome)
         {
-            if (!ModelState.IsValid)
+            List<MedicamentoDTO> medicamentoDTOList = new List<MedicamentoDTO>();
+
+            foreach (var medicamento in _context.Medicamento.Where(m => m.Nome == nome))
             {
-                return BadRequest(ModelState);
+                medicamentoDTOList.Add(new MedicamentoDTO(medicamento));
             }
 
-            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Nome.Equals(nome));
-
-            if (medicamento == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(new MedicamentoDTO(medicamento));
+            return medicamentoDTOList;
         }
 
         // GET: api/Medicamento/5/Apresentacoes

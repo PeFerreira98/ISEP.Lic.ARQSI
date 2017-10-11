@@ -36,7 +36,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Farmaco/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetFarmaco([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -55,23 +55,17 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Farmaco/Ibuprofeno
-        // Incomplete (need 2 return list/enumerable)
         [HttpGet("{nome}")]
-        public async Task<IActionResult> GetFarmaco([FromRoute] string nome)
+        public IEnumerable<FarmacoDTO> GetFarmacoByNome([FromRoute] string nome)
         {
-            if (!ModelState.IsValid)
+            List<FarmacoDTO> FarmacoDTOList = new List<FarmacoDTO>();
+
+            foreach (var farmaco in _context.Farmaco.Where(f => f.Nome == nome))
             {
-                return BadRequest(ModelState);
+                FarmacoDTOList.Add(new FarmacoDTO(farmaco));
             }
 
-            var farmaco = await _context.Farmaco.SingleOrDefaultAsync(m => m.Nome.Equals(nome));
-
-            if (farmaco == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(new FarmacoDTO(farmaco));
+            return FarmacoDTOList;
         }
 
         // GET: api/Farmaco/5/Medicamentos
