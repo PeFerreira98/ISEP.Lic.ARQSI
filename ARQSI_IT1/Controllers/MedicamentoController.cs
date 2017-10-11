@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
+using ARQSI_IT1.DTOs;
 
 namespace ARQSI_IT1.Controllers
 {
@@ -22,9 +23,16 @@ namespace ARQSI_IT1.Controllers
 
         // GET: api/Medicamento
         [HttpGet]
-        public IEnumerable<Medicamento> GetMedicamento()
+        public IEnumerable<MedicamentoDTO> GetMedicamento()
         {
-            return _context.Medicamento;
+            List<MedicamentoDTO> medicamentoDTOList = new List<MedicamentoDTO>();
+
+            foreach(var medicamento in _context.Medicamento)
+            {
+                medicamentoDTOList.Add(new MedicamentoDTO(medicamento));
+            }
+
+            return medicamentoDTOList;
         }
 
         // GET: api/Medicamento/5
@@ -43,7 +51,7 @@ namespace ARQSI_IT1.Controllers
                 return NotFound();
             }
 
-            return Ok(medicamento);
+            return Ok(new MedicamentoDTO(medicamento));
         }
 
         // GET: api/Medicamento/Brufen
@@ -63,31 +71,38 @@ namespace ARQSI_IT1.Controllers
                 return NotFound();
             }
 
-            return Ok(medicamento);
+            return Ok(new MedicamentoDTO(medicamento));
         }
 
         // GET: api/Medicamento/5/Apresentacoes
         [HttpGet("{id}/Apresentacoes")]
-        public IEnumerable<Apresentacao> GetApresentacoesMedicamento([FromRoute] int id)
+        public IEnumerable<ApresentacaoDTO> GetApresentacoesMedicamento([FromRoute] int id)
         {
-            return _context.Apresentacao
+            List<ApresentacaoDTO> apresentacaoDTOList = new List<ApresentacaoDTO>();
+
+            foreach (var apresentacao in _context.Apresentacao
                 .Include(m => m.Medicamento)
                 .Include(m => m.Posologia)
                 .Include(m => m.Farmaco)
-                .Where(m => m.MedicamentoId == id);
+                .Where(m => m.MedicamentoId == id))
+            {
+                 apresentacaoDTOList.Add(new ApresentacaoDTO(apresentacao));
+            }
+
+            return apresentacaoDTOList;
         }
 
         // GET: api/Medicamento/5/Posologias
         [HttpGet("{id}/Posologias")]
-        public IEnumerable<Posologia> GetPosologiasMedicamento([FromRoute] int id)
+        public IEnumerable<PosologiaDTO> GetPosologiasMedicamento([FromRoute] int id)
         {
-            List<Posologia> posologiasList = new List<Posologia>(); 
+            List<PosologiaDTO> posologiasList = new List<PosologiaDTO>(); 
 
             foreach(var apresentacao in _context.Apresentacao.Where(a => a.MedicamentoId == id))
             {
                 foreach (var posologia in _context.Posologia.Where(p => p.Id == apresentacao.PosologiaId))
                 {
-                    posologiasList.Add(posologia);
+                    posologiasList.Add(new PosologiaDTO(posologia));
                 }
             }
 

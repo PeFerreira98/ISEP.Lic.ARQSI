@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
+using ARQSI_IT1.DTOs;
 
 namespace ARQSI_IT1.Controllers
 {
@@ -22,9 +23,16 @@ namespace ARQSI_IT1.Controllers
 
         // GET: api/Posologia
         [HttpGet]
-        public IEnumerable<Posologia> GetPosologia()
+        public IEnumerable<PosologiaDTO> GetPosologia()
         {
-            return _context.Posologia;
+            List<PosologiaDTO> posologiaDTOList = new List<PosologiaDTO>();
+
+            foreach (var posologia in _context.Posologia)
+            {
+                posologiaDTOList.Add(new PosologiaDTO(posologia));
+            }
+
+            return posologiaDTOList;
         }
 
         // GET: api/Posologia/5
@@ -43,7 +51,7 @@ namespace ARQSI_IT1.Controllers
                 return NotFound();
             }
 
-            return Ok(posologia);
+            return Ok(new PosologiaDTO(posologia));
         }
 
         // PUT: api/Posologia/5

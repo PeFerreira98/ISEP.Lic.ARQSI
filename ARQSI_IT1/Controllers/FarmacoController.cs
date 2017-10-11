@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
+using ARQSI_IT1.DTOs;
 
 namespace ARQSI_IT1.Controllers
 {
@@ -22,9 +23,16 @@ namespace ARQSI_IT1.Controllers
 
         // GET: api/Farmaco
         [HttpGet]
-        public IEnumerable<Farmaco> GetFarmaco()
+        public IEnumerable<FarmacoDTO> GetFarmaco()
         {
-            return _context.Farmaco;
+            List<FarmacoDTO> FarmacoDTOList = new List<FarmacoDTO>();
+
+            foreach (var farmaco in _context.Farmaco)
+            {
+                FarmacoDTOList.Add(new FarmacoDTO(farmaco));
+            }
+
+            return FarmacoDTOList;
         }
 
         // GET: api/Farmaco/5
@@ -43,7 +51,7 @@ namespace ARQSI_IT1.Controllers
                 return NotFound();
             }
 
-            return Ok(farmaco);
+            return Ok(new FarmacoDTO(farmaco));
         }
 
         // GET: api/Farmaco/Ibuprofeno
@@ -63,47 +71,52 @@ namespace ARQSI_IT1.Controllers
                 return NotFound();
             }
 
-            return Ok(farmaco);
+            return Ok(new FarmacoDTO(farmaco));
         }
 
         // GET: api/Farmaco/5/Medicamentos
         [HttpGet("{id}/medicamentos")]
-        public IEnumerable<Medicamento> GetMedicamentosFarmaco([FromRoute] int id)
+        public IEnumerable<MedicamentoDTO> GetMedicamentosFarmaco([FromRoute] int id)
         {
-            List<Medicamento> medicamentosList = new List<Medicamento>();
+            List<MedicamentoDTO> medicamentoDTOList = new List<MedicamentoDTO>();
 
             foreach (var apresentacao in _context.Apresentacao
                 .Include(a => a.Medicamento)
                 .Where(a => a.FarmacoId == id))
             {
-                    medicamentosList.Add(apresentacao.Medicamento);
+                medicamentoDTOList.Add(new MedicamentoDTO(apresentacao.Medicamento));
             }
 
-            return medicamentosList;
+            return medicamentoDTOList;
         }
 
         // GET: api/Farmaco/5/Apresentacoes
         [HttpGet("{id}/apresentacoes")]
-        public IEnumerable<Apresentacao> GetApresentacoesFarmaco([FromRoute] int id)
+        public IEnumerable<ApresentacaoDTO> GetApresentacoesFarmaco([FromRoute] int id)
         {
-            return _context.Apresentacao
+            List<ApresentacaoDTO> apresentacaoDTOList = new List<ApresentacaoDTO>();
+
+            foreach (var apresentacao in _context.Apresentacao
                 .Include(m => m.Medicamento)
-                .Include(m => m.Farmaco)
                 .Include(m => m.Posologia)
-                .Where(m => m.FarmacoId == id);
+                .Include(m => m.Farmaco)
+                .Where(m => m.FarmacoId == id))
+            {
+                apresentacaoDTOList.Add(new ApresentacaoDTO(apresentacao));
+            }
+
+            return apresentacaoDTOList;
         }
         
         // GET: api/Farmaco/5/Posologias
         [HttpGet("{id}/posologias")]
-        public IEnumerable<Posologia> GetPosologiasFarmaco([FromRoute] int id)
+        public IEnumerable<PosologiaDTO> GetPosologiasFarmaco([FromRoute] int id)
         {
-            List<Posologia> posologiasList = new List<Posologia>();
+            List<PosologiaDTO> posologiasList = new List<PosologiaDTO>();
 
-            foreach (var apresentacao in _context.Apresentacao
-                .Include(a => a.Posologia)
-                .Where(a => a.FarmacoId == id))
+            foreach (var apresentacao in _context.Apresentacao.Include(a => a.Posologia).Where(a => a.MedicamentoId == id))
             {
-                    posologiasList.Add(apresentacao.Posologia);
+                posologiasList.Add(new PosologiaDTO(apresentacao.Posologia));
             }
 
             return posologiasList;

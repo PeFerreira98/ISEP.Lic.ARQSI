@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
+using ARQSI_IT1.DTOs;
 
 namespace ARQSI_IT1.Controllers
 {
@@ -22,12 +23,19 @@ namespace ARQSI_IT1.Controllers
 
         // GET: api/Apresentacao
         [HttpGet]
-        public IEnumerable<Apresentacao> GetApresentacao()
+        public IEnumerable<ApresentacaoDTO> GetApresentacao()
         {
-            return _context.Apresentacao
+            List<ApresentacaoDTO> apresentacaoDTOList = new List<ApresentacaoDTO>();
+
+            foreach (var apresentacao in _context.Apresentacao
                 .Include(m => m.Medicamento)
                 .Include(m => m.Farmaco)
-                .Include(m => m.Posologia);
+                .Include(m => m.Posologia))
+            {
+                apresentacaoDTOList.Add(new ApresentacaoDTO(apresentacao));
+            }
+
+            return apresentacaoDTOList;
         }
 
         // GET: api/Apresentacao/5
@@ -50,7 +58,7 @@ namespace ARQSI_IT1.Controllers
                 return NotFound();
             }
 
-            return Ok(apresentacao);
+            return Ok(new ApresentacaoDTO(apresentacao));
         }
 
         // PUT: api/Apresentacao/5
