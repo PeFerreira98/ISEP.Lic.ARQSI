@@ -18,6 +18,17 @@ namespace ARQSI_IT1.Data
                 return; // DB has Data
             }
 
+//// Account Populate
+//            var accounts = new AccountRegisterLogin[]
+//            {
+
+//                new AccountRegisterLogin()
+//            };
+//            foreach (Acc medicamento in medicamentos)
+//            {
+//                _context.Medicamento.Add(medicamento);
+//            }
+//            _context.SaveChanges();
 
 // Medicamento Populate
             var medicamentos = new Medicamento[]

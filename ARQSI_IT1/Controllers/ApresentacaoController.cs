@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
 using ARQSI_IT1.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ARQSI_IT1.Controllers
 {
+    //[Authorize]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     [Route("api/Apresentacao")]
     public class ApresentacaoController : Controller
