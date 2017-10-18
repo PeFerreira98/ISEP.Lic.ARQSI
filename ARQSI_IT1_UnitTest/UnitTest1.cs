@@ -1,4 +1,3 @@
-﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ARQSI_IT1_UnitTest
