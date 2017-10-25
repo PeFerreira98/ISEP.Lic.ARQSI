@@ -1,0 +1,16 @@
+{
+  "name": "arqsi_it2",
+  "version": "0.0.0",
+  "description": "ARQSI_IT2",
+  "main": "server.js",
+  "author": {
+    "name": "pefer"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33",
+    "mongoose": "^4.12.4",
+    "morgan": "^1.9.0"
+  }
+}
