@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
 using ARQSI_IT1.DTOs;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ARQSI_IT1.Controllers
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ARQSI_IT1.Models;
+﻿using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models.Account;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
