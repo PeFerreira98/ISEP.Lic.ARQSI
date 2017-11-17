@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
 using ARQSI_IT1.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ARQSI_IT1.Controllers
 {
-    //[Authorize]
-    //[Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     [Route("api/Farmaco")]
     public class FarmacoController : Controller
@@ -22,6 +23,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Farmaco
+        [AllowAnonymous]
         [HttpGet]
         public IEnumerable<FarmacoDTO> GetFarmaco()
         {
@@ -36,6 +38,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Farmaco/5
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetFarmaco([FromRoute] int id)
         {
@@ -55,6 +58,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Farmaco/Ibuprofeno
+        [AllowAnonymous]
         [HttpGet("{nome}")]
         public IEnumerable<FarmacoDTO> GetFarmacoByNome([FromRoute] string nome)
         {
@@ -69,6 +73,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Farmaco/5/Medicamentos
+        [AllowAnonymous]
         [HttpGet("{id}/medicamentos")]
         public IEnumerable<MedicamentoDTO> GetMedicamentosFarmaco([FromRoute] int id)
         {
@@ -85,6 +90,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Farmaco/5/Apresentacoes
+        [AllowAnonymous]
         [HttpGet("{id}/apresentacoes")]
         public IEnumerable<ApresentacaoDTO> GetApresentacoesFarmaco([FromRoute] int id)
         {
@@ -101,8 +107,9 @@ namespace ARQSI_IT1.Controllers
 
             return apresentacaoDTOList;
         }
-        
+
         // GET: api/Farmaco/5/Posologias
+        [AllowAnonymous]
         [HttpGet("{id}/posologias")]
         public IEnumerable<PosologiaDTO> GetPosologiasFarmaco([FromRoute] int id)
         {

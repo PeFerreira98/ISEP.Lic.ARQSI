@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
 using ARQSI_IT1.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ARQSI_IT1.Controllers
 {
-    //[Authorize]
-    //[Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     [Route("api/Posologia")]
     public class PosologiaController : Controller
@@ -22,6 +23,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Posologia
+        [AllowAnonymous]
         [HttpGet]
         public IEnumerable<PosologiaDTO> GetPosologia()
         {
@@ -36,6 +38,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Posologia/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPosologia([FromRoute] int id)
         {
