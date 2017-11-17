@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
 using ARQSI_IT1.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ARQSI_IT1.Controllers
 {
-    //[Authorize]
-    //[Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     [Route("api/Medicamento")]
     public class MedicamentoController : Controller
@@ -22,6 +23,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Medicamento
+        [AllowAnonymous]
         [HttpGet]
         public IEnumerable<MedicamentoDTO> GetMedicamento()
         {
@@ -36,6 +38,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Medicamento/5
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetMedicamento([FromRoute] int id)
         {
@@ -55,6 +58,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Medicamento/Brufen
+        [AllowAnonymous]
         [HttpGet("{nome}")]
         public IEnumerable<MedicamentoDTO> GetMedicamentoByName([FromRoute] string nome)
         {
@@ -69,6 +73,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Medicamento/5/Apresentacoes
+        [AllowAnonymous]
         [HttpGet("{id}/Apresentacoes")]
         public IEnumerable<ApresentacaoDTO> GetApresentacoesMedicamento([FromRoute] int id)
         {
@@ -87,6 +92,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Medicamento/5/Posologias
+        [AllowAnonymous]
         [HttpGet("{id}/Posologias")]
         public IEnumerable<PosologiaDTO> GetPosologiasMedicamento([FromRoute] int id)
         {

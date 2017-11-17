@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ARQSI_IT1.Models;
 using ARQSI_IT1.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ARQSI_IT1.Controllers
 {
-    //[Authorize]
-    //[Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     [Route("api/Apresentacao")]
     public class ApresentacaoController : Controller
@@ -22,6 +23,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Apresentacao
+        [AllowAnonymous]
         [HttpGet]
         public IEnumerable<ApresentacaoDTO> GetApresentacao()
         {
@@ -39,6 +41,7 @@ namespace ARQSI_IT1.Controllers
         }
 
         // GET: api/Apresentacao/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetApresentacao([FromRoute] int id)
         {
