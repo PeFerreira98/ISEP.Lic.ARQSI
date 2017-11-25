@@ -1,16 +1,31 @@
 {
   "name": "arqsi_it2",
   "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
   "description": "ARQSI_IT2",
-  "main": "server.js",
   "author": {
     "name": "pefer"
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~3.1.0",
+    "express": "~4.16.2",
+    "http-status-codes": "^1.3.0",
+    "jade": "~1.11.0",
+    "jsonwebtoken": "^8.1.0",
     "mongodb": "^2.2.33",
-    "mongoose": "^4.12.4",
-    "morgan": "^1.9.0"
+    "mongoose": "~4.13.5",
+    "mongoose-id-validator": "^0.4.3",
+    "morgan": "~1.9.0",
+    "node-rest-client": "^3.1.0",
+    "nodemailer": "^4.4.0",
+    "pug": "^2.0.0-rc.4",
+    "request": "^2.83.0",
+    "serve-favicon": "~2.4.5"
   }
 }
