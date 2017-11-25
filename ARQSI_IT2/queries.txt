@@ -1,0 +1,9 @@
+{"name":"rajesh", "password":"qwerty", "email":"rajesh@arqsi.pt", "medico":"true", "farmaceutico":"false", "paciente":"false"}
+
+{"name":"admin", "password":"qwerty", "email":"admin@arqsi.pt", "medico":"true", "farmaceutico":"true", "paciente":"true"}
+
+{"email":"admin@arqsi.pt", "password":"qwerty"}
+
+{"paciente":"5a0b123f50524829d0af47f9", "prescricoes":[{"numero":"1", "apresentacaoID":"1", "quantidade":"2", "validade":"20-12-2017"}]}
+
+{"paciente":"5a0b123f50524829d0af47f9", "prescricoes":[{"numero":"1", "apresentacaoID":"1", "quantidade":"2", "validade":"20-12-2017"}, {"numero":"2", "apresentacaoID":"2", "quantidade":"4", "validade":"22-12-2017"}]}
