@@ -7,3 +7,25 @@
 {"paciente":"5a0b123f50524829d0af47f9", "prescricoes":[{"numero":"1", "apresentacaoID":"1", "quantidade":"2", "validade":"20-12-2017"}]}
 
 {"paciente":"5a0b123f50524829d0af47f9", "prescricoes":[{"numero":"1", "apresentacaoID":"1", "quantidade":"2", "validade":"20-12-2017"}, {"numero":"2", "apresentacaoID":"2", "quantidade":"4", "validade":"22-12-2017"}]}
+
+{"paciente":"5a0b123f50524829d0af47f9", "prescricoes":[{"numero":"1", "apresentacaoID":"1", "quantidade":"2", "validade":"2017-12-21T00:00:00.511Z"}, {"numero":"2", "apresentacaoID":"2", "quantidade":"4", "validade":"2017-12-21T00:00:00.511Z"}]}
+
+{"paciente":"5a0b123f50524829d0af47f9", "prescricoes":[{"numero":"1", "apresentacaoID":"1", "quantidade":"2", "validade":"2017-12-21"}, {"numero":"2", "apresentacaoID":"2", "quantidade":"4", "validade":"2017-12-21"}]}
+
+localhost:3000/api/receita/
+localhost:3000/api/receita/test GET
+localhost:3000/api/receita/test POST
+localhost:3000/api/receita/5a1ad347d53b923068076fcf GET
+localhost:3000/api/receita/5a1ad347d53b923068076fcf PUT
+localhost:3000/api/receita/apresentacao/1
+
+localhost:3000/api/receita/5a1ad347d53b923068076fcf/prescricao
+localhost:3000/api/receita/5a1ad347d53b923068076fcf/prescricao/0
+localhost:3000/api/receita/5a1ad347d53b923068076fcf/prescricao/0/aviar/1
+
+localhost:3000/api/user/
+localhost:3000/api/user/test
+localhost:3000/api/user/login
+localhost:3000/api/user/register
+localhost:3000/api/user/5a0b123f50524829d0af47f9/prescricao/poraviar
+

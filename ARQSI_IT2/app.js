@@ -13,8 +13,14 @@ var config = require('./config');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var receitas = require('./routes/receitas');
+var prescricoes = require('./routes/prescricoes');
+
+var cors = require ('cors');
 
 var app = express();
+
+// angularJS CORS
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,8 +43,9 @@ mongoose.Promise = global.Promise;
 
 app.use('/', routes);
 app.use('/api', routes);
-app.use('/api/users', users);
-app.use('/api/receitas', receitas);
+app.use('/api/user', users);
+app.use('/api/receita', receitas);
+app.use('/api/receita', prescricoes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -75,4 +82,5 @@ app.set('port', process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);
+    console.log('Express server listening on port ' + server.address().port)
 });
