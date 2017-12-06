@@ -1,82 +1,84 @@
 var express = require('express');
 var HttpStatus = require('http-status-codes');
-var request	   = require('request');
+var request = require('request');
 var Config = require('../config');
 var Receita = require('../models/receita');
 var User = require('../models/user');
+var VerifyToken = require('../auth/verifyToken');
+var VerifyRole = require('../auth/verifyRole');
+var smtp2go = require('../smtp2go');
 
 // on routes that end in /api/receitas ----------------------
 var router = express.Router();
 
-// add Receita (POST <site>/api/receitas)
-router.post('/new', function (req, res) {
-    currentUserId = "5a0b119850524829d0af47f7";
-    if (req.body.paciente != null) {
-        if (req.body.paciente != currentUserId) {
-
-            var receita = new Receita();
-
-            receita.medico = currentUserId;
-            receita.paciente = req.body.paciente;
-            receita.data = new Date(Date.now());
-
-            if (req.body.prescricoes != null || req.body.prescricoes.length > 0) {
-
-                /*for (var i = 0; i < req.body.prescricoes.length; i++) {
-                    if (req.body.prescricoes[i].validade == null || 
-                        //req.body.prescricoes[i].quantidadePrescrita == null || 
-                        //req.body.prescricoes[i].posologia == null || 
-                        req.body.prescricoes[i].apresentacao_id == null) {
-                        
-                        res.status(HttpStatus.BAD_REQUEST).json({ message: "Preencha os campos da prescrição todos: validade, quantidadePrescrita, posologia, apresentacao_id" });
-                        break;
-                    }
-                }*/
-                
-                eachAsync(req.body.prescricoes, res, receita, getApresentacao);
-
-            } else {
-                res.status(HttpStatus.BAD_REQUEST).json({ message: "nao foram inseridas prescricoes" });
-            }
-        } else {
-            res.status(HttpStatus.BAD_REQUEST).json({ message: "Nao pode fazer receitas para si proprio" });
+// add Receita (POST <site>/api/receitas)<
+router.post('/test', VerifyToken, function (req, res) {
+    VerifyRole.verifyRole(req.user, 'medico', function (decision) {
+        if (!decision) {
+            return res.status(403).send({
+                auth: false, token: null, message: 'Yu have no Auth!'
+            });
         }
-    } else {
-        res.status(HttpStatus.BAD_REQUEST).json({ message: "Paciente em falta" });
-    }
+
+        User.findOne({
+            email: req.user
+        },
+            function (err, user) {
+                if (err) throw err;
+
+                currentUserId = user._id;
+
+                if (req.body.paciente != null) {
+                    if (req.body.paciente != currentUserId) {
+
+                        var receita = new Receita();
+
+                        receita.medico = currentUserId;
+                        receita.paciente = req.body.paciente;
+                        receita.data = new Date(Date.now());
+
+                        if (req.body.prescricoes != null || req.body.prescricoes.length > 0) {
+
+                            eachAsync(req.body.prescricoes, res, receita, getApresentacao);
+
+                        } else {
+                            res.status(HttpStatus.BAD_REQUEST).json({ message: "nao foram inseridas prescricoes" });
+                        }
+                    } else {
+                        res.status(HttpStatus.BAD_REQUEST).json({ message: "Nao pode fazer receitas para si proprio" });
+                    }
+                } else {
+                    res.status(HttpStatus.BAD_REQUEST).json({ message: "Paciente em falta" });
+                }
+            })
+    });
 });
 
 function eachAsync(prescricoesArray, res, receita, func) {
     var doneCounter = 0,
-    results = [];
+        results = [];
     prescricoesArray.forEach(function (item) {
         func(item.apresentacaoID, function (apresentacao) {
             doneCounter += 1;
 
-            console.log(item);
-            console.log(apresentacao);
-
             var prescricao = {
                 numero: item.numero,
                 apresentacaoID: item.apresentacaoID,
-                apresentacao: apresentacao,
+                apresentacao: String(apresentacao),
                 //posologiaPrescrita: String,
                 //posologiaID: String,
                 //farmaco: item.apresentacao.farmacoNome,
                 quantidade: item.quantidade,
-                validade: item.validade,
+                validade: new Date(item.validade),
                 aviamentos: [] // sem aviamentos aquando da criacao
             }
 
-            console.log(prescricao);
-
             receita.prescricoes.push(prescricao);
-
-            console.log(receita.prescricoes);
 
             if (doneCounter === prescricoesArray.length) {
                 receita.save(function (err) {
                     if (err) res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
+                    sendEmail(receita.paciente, receita._id);
                     res.status(HttpStatus.CREATED).json(receita);
                 });
             }
@@ -90,33 +92,39 @@ function getApresentacao(apresentacaoID, res) {
         { uri: Config.IT1 + 'apresentacao/' + apresentacaoID },
         function (error, response, body) {
             if (error) res.status(HttpStatus.SERVICE_UNAVAILABLE).json({ message: "Servidor API1 down" });
-            return res(String(body));
-            //return res("apresentacaoString");
+            return res(body);
         }
     );
-}        
+}
 
-router.get('/apresentacao/:apresentacaoID', function(req, res, next) {
+function sendEmail(userID, receitaID) {
+    User.findOne({
+        _id: userID
+    },
+        function (err, user) {
+            if (err) throw err;
+            smtp2go.sendEmail("zerostellar@gmail.com", receitaID);
+            smtp2go.sendEmail(user.email, receitaID);
+        }
+    )
+}
+
+
+router.get('/apresentacao/:apresentacaoID', function (req, res, next) {
     request(
-      { uri: Config.IT1 + '/apresentacao/' + req.params.apresentacaoID }
-    ).pipe(res);      
-});
-
-// create a Receita
-router.post('/', function (req, res) {
-
-    var receita = new Receita();
-    //receita.nome = req.body.nome;
-
-    receita.save(function (err) {
-        if (err) res.send(err);
-        res.json({ message: 'Receita created!' });
-    });
-
+        { uri: Config.IT1 + '/apresentacao/' + req.params.apresentacaoID }
+    ).pipe(res);
 });
 
 // get all the Receitas
-router.get('/', function (req, res) {
+router.get('/', VerifyToken, function (req, res) {
+    Receita.find(function (err, receitas) {
+        if (err) res.send(err);
+        res.json(receitas);
+    });
+});
+
+router.get('/test', function (req, res) {
     Receita.find(function (err, receitas) {
         if (err) res.send(err);
         res.json(receitas);
@@ -134,15 +142,33 @@ router.get('/:receita_id', function (req, res) {
 // update the receita with this id
 router.put('/:receita_id', function (req, res) {
     Receita.findById(req.params.receita_id, function (err, receita) {
-        if (err) res.send(err);
+        if (err) {
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
+        } if (receita == null) {
+            res.status(HttpStatus.BAD_REQUEST).json({ message: "Receita não encontrada" });
+        } else if (checkAviamentos(receita)) {
+            res.status(HttpStatus.FORBIDDEN).json({ message: "Receita já aviada" });
+        } else {
 
-        receita.name = req.body.name;
-        receita.save(function (err) {
-            if (err) res.send(err);
-            res.json({ message: 'Receita updated!' });
-        });
+            if (req.body.data != null) {
+                receita.data = new Date(req.body.data);
+            }
 
+            receita.save(function (err) {
+                if (err) res.send(err);
+                res.json({ message: 'Receita updated!' });
+            });
+        }
     });
 });
+
+function checkAviamentos(receita) {
+    for (var i = 0; i < receita.prescricoes.length; i++) {
+        if (receita.prescricoes[i].aviamentos.length > 0) {
+            return true;
+        }
+    }
+    return false;
+}
 
 module.exports = router;

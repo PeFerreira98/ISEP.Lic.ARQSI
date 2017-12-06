@@ -13,7 +13,16 @@ module.exports = {
         }
 
         if (user) {
-          func(role === 'medico' && user.medico === true);
+          if (role === 'medico' && user.medico === true) {
+             return func(true);
+          }
+          if (role === 'farmaceutico' && user.farmaceutico === true) {
+            return func(true);
+          }
+          if (role === 'paciente' && user.paciente === true) {
+            return func(true);
+          }
+          return func(false);
         }
       }
     )
