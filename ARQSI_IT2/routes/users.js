@@ -13,10 +13,10 @@ var router = express.Router();
 
 //test purposes (GET <site>/api/user/test)
 router.get('/test', function (req, res) {
-  User.find(function (err, users) {
-    if (err) res.send(err);
-    res.json(users);
-  })
+    User.find(function (err, users) {
+        if (err) res.send(err);
+        res.json(users);
+    });
 });
 
 //list all Users (GET <site>/api/user)
@@ -29,9 +29,9 @@ router.get('/', VerifyToken, function (req, res) {
     }
 
     User.find(function (err, users) {
-      if (err) res.send(err);
-      res.json(users);
-    })
+        if (err) res.send(err);
+        res.json(users);
+    });
 
   });
 });
@@ -47,10 +47,10 @@ router.post('/register', function (req, res) {
   user.paciente = req.body.paciente;
 
   user.save(function (err) {
-    console.log("Saving User...");
-    if (err) return res.status(500).send("Problem Registering User.");
-    res.json({ message: 'User Registered!' });
-  })
+      console.log("Saving User...");
+      if (err) return res.status(500).send("Problem Registering User.");
+      res.json({ message: 'User Registered!' });
+  });
 });
 
 //login User (POST <site>/api/user/login)
@@ -67,7 +67,7 @@ router.post('/login', function (req, res) {
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
         if (!passwordIsValid) {
-          return res.status(401).send({ auth: false, token: null, message: 'Authentication Failed. Check Password.' })
+            return res.status(401).send({ auth: false, token: null, message: 'Authentication Failed. Check Password.' });
         }
         else {
           const payload = {
@@ -89,7 +89,7 @@ router.post('/login', function (req, res) {
 router.get('/:user_id/prescricao/poraviar', function (req, res) {
   User.findById(req.params.user_id, function (err, user) {
     if (err) res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    if (user == null) res.status(HttpStatus.BAD_REQUEST).json({ message: "User not found" });
+    if (user === null) res.status(HttpStatus.BAD_REQUEST).json({ message: "User not found" });
 
     Receita.find(function (err, receitas) {
       if (err) res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
@@ -114,7 +114,7 @@ function totallyAviada(prescricao) {
     quantidade -= aviamento.quantidade;
   });
 
-  if (quantidade == 0) return true;
+  if (quantidade === 0) return true;
   return false;
 }
 
