@@ -1,18 +1,21 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-</div>
-
 <div class="container">
+  <div class="fixed">
+    <a href="https://arqsiit2.azurewebsites.net">
+      <img width="25" src="https://progressivenutritional.com/hypfiles/uploads/2015/12/heart-icon.png">
+    </a>
+  </div>
   <div class="flex-item">
     <nav>
       <a routerLink="/dashboard">Dashboard</a>
       <a *ngIf="userInfo && userInfo.medico" routerLink="/receitas">Receitas</a>
+      <a routerLink="/receitas">Receitas(Hard)</a>
+      <a>Prescricoes(pholder)</a>
+      <a>Users(pholder)</a>
+      <a>Farmacos(pholder)</a>
+      <a>Medicamentos(pholder)</a>
     </nav>
   </div>
-  <div style="text-align:right" class="fixed">
+  <div class="fixedLogin">
     <nav>
       <a *ngIf="!userInfo" routerLink="/login">Login</a>
       <a *ngIf="userInfo" routerLink="/login">Logout</a>
@@ -20,15 +23,19 @@
   </div>
 </div>
 
+<router-outlet></router-outlet>
 <!--<app-messages></app-messages>-->
 
 <footer>
-  <div style="text-align:right">
-    <p>Created by: PeFerreira98 | Contact information:
-      <a href="mailto:1140953@isep.ipp.pt">1140953@isep.ipp.pt</a> .</p>
-    <p>
+  <div class="footer">
+    <div class="footer-tech">
       <img width="150" src="https://js.devexpress.com/Content/Images/features/html5-css-javascript-logos.png">
       <img width="50" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-    </p>
+    </div>
+    <div class="flex-item"></div>
+    <div class="footer-credits">
+      Created by: PeFerreira98 | Contact information:
+      <a href="mailto:1140953@isep.ipp.pt">1140953@isep.ipp.pt</a> .
+    </div>
   </div>
 </footer>

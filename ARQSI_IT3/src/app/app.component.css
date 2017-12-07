@@ -1,18 +1,43 @@
 /* AppComponent's private CSS styles */
+.footer{
+  display: flex;
+  height: 80px;
+  background-color: rgb(35, 14, 99);
+  align-items: center;
+  justify-content: center;
+}
+.footer-tech{
+  align-items: left;
+}
+.footer-credits{
+  align-items: right;
+}
+
 .container{
   display: flex;
+  height: 50px;
+  background-color: rgb(35, 14, 99);
+  align-items: center;
+  justify-content: center;
 }
 .fixed{
-  width: 300px;
+  text-align: center;
+  width: 70px;
+  justify-content: center;
+}
+.fixedLogin{
+  text-align: center;
+  width: 90px;
+  justify-content: center;
 }
 .flex-item{
   flex-grow: 1;
+  justify-content: center;
 }
 
 h1 {
-    font-size: 1.2em;
+    font-size: 1.0em;
     color: #999;
-    margin-bottom: 0;
   }
 
   h2 {
