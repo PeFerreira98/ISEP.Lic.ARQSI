@@ -1,3 +1,28 @@
-<p>
-  receitas works!
-</p>
+<div class="receitasComponent">
+  <h1> Receitas </h1>
+  <div>
+    <ol class="rounded-list">
+      <li *ngFor="let receita of receitas">
+        <a class="badge">{{receita._id}}</a>
+        <ul>
+          <li>{{receita.prescricoes}}</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<!--
+<div class="receitasComponent">
+  <h1> Receitas </h1>
+  <section *ngFor="let receita of receitas" class="ac-container">
+    <div>
+        <input id="ac-1" name="accordion-1" type="checkbox" />
+        <label for="ac-1">{{receita._id}}</label>
+        <article class="ac-small">
+          <p>{{receita.prescricoes}}</p>
+        </article>
+    </div>
+  </section>
+</div>
+-->

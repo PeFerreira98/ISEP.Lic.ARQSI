@@ -3,7 +3,7 @@ import { Router, CanActivate } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
 
 @Injectable()
-export class MedicoGuard implements CanActivate {
+export class FarmaceuticoGuard implements CanActivate {
     
     constructor(
         private router: Router,
@@ -15,7 +15,7 @@ export class MedicoGuard implements CanActivate {
         console.log(this.authenticationService.userInfo);
         
         if (this.authenticationService.userInfo)
-            if (this.authenticationService.userInfo.medico)
+            if (this.authenticationService.userInfo.farmaceutico)
                 return true;
 
         this.router.navigate(['/login', { u: 'no' }]);

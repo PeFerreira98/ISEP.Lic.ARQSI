@@ -19,6 +19,7 @@ export class ReceitasService {
 
   getHeaders() {
     console.log(this.authenticationService.userInfo.token);
+    
     let headers = new HttpHeaders({
       'x-access-token': this.authenticationService.userInfo.token
     });

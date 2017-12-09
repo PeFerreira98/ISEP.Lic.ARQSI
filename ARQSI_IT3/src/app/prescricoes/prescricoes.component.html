@@ -1,0 +1,16 @@
+<div class="prescricoesComponent">
+  <h1> Prescricoes </h1>
+  <div>
+    <ol class="rounded-list">
+      <li *ngFor="let prescricao of prescricoes">
+        <a class="badge">{{prescricao._id}}</a>
+        <ul>
+          <li>{{prescricao.numero}}</li>
+          <li>{{prescricao.quantidade}}</li>
+          <li>{{prescricao.apresentacaoID}}</li>
+          <li>{{prescricao.apresentacao}}</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+</div>

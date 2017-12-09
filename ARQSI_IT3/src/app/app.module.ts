@@ -1,26 +1,32 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule }    from '@angular/forms';
-import { HttpClientModule }    from '@angular/common/http';
+import { BrowserModule }         from '@angular/platform-browser';
+import { NgModule }              from '@angular/core';
+import { FormsModule }           from '@angular/forms';
+import { HttpClientModule }      from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule }      from './app-routing.module';
+import { AppComponent }          from './app.component';
 
-import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LoginComponent } from './login/login.component';
+import { DashboardComponent }    from './dashboard/dashboard.component';
+import { LoginComponent }        from './login/login.component';
+import { ReceitasComponent }     from './receitas/receitas.component';
+import { PrescricoesComponent } from './prescricoes/prescricoes.component';
 
+import { ReceitasService }       from './receitas.service';
+import { PrescricoesService }       from './prescricoes.service';
 import { AuthenticationService } from './authentication.service';
+
 import { AuthGuard }             from './guards/auth.guard';
 import { MedicoGuard }           from './guards/medico.guard';
+import { FarmaceuticoGuard }     from './guards/farmaceutico.guard';
 import { UtenteGuard }           from './guards/utente.guard';
-import { ReceitasComponent } from './receitas/receitas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     LoginComponent,
-    ReceitasComponent
+    ReceitasComponent,
+    PrescricoesComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +37,14 @@ import { ReceitasComponent } from './receitas/receitas.component';
   providers: [
     AuthGuard,
     MedicoGuard,
+    FarmaceuticoGuard,
     UtenteGuard,
-    AuthenticationService
+    AuthenticationService,
+    ReceitasService,
+    PrescricoesService
    ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

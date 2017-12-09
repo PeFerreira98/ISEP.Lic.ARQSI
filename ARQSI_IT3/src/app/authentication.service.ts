@@ -29,6 +29,8 @@ export class AuthenticationService {
             this.userInfo = {
               token: data.token,
               tokenExp: tokenDecoded.exp,
+              id: tokenDecoded.userId,
+              email: tokenDecoded.user,
               medico: tokenDecoded.medico,
               farmaceutico: tokenDecoded.farmaceutico,
               utente: tokenDecoded.utente
@@ -37,8 +39,6 @@ export class AuthenticationService {
             console.log(this.userInfo);
 
             localStorage.userInfo = this.userInfo;
-
-            console.log(localStorage.userInfo);
 
             this.authentication.next(this.userInfo);
             observer.next(true);

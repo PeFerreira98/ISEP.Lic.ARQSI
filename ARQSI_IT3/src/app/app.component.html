@@ -8,11 +8,12 @@
     <nav>
       <a routerLink="/dashboard">Dashboard</a>
       <a *ngIf="userInfo && userInfo.medico" routerLink="/receitas">Receitas</a>
-      <a routerLink="/receitas">Receitas(Hard)</a>
-      <a>Prescricoes(pholder)</a>
+      <a *ngIf="userInfo && userInfo.farmaceutico" routerLink="/prescricoes">Prescricoes</a>
+      <a routerLink="/receitas">Receitas(H)</a>
+      <a routerLink="/prescricoes">Prescricoes(H)</a>
       <a>Users(pholder)</a>
-      <a>Farmacos(pholder)</a>
       <a>Medicamentos(pholder)</a>
+      <a>Farmacos(pholder)</a>
     </nav>
   </div>
   <div class="fixedLogin">
