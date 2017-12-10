@@ -25,14 +25,14 @@
   width: 70px;
   justify-content: center;
 }
-.fixedLogin{
-  text-align: center;
-  width: 90px;
-  justify-content: center;
-}
 .flex-item{
   flex-grow: 1;
   justify-content: center;
+}
+.fixedLogin{
+  text-align: right;
+  width: 160px;
+  justify-content: right;
 }
 
 h1 {

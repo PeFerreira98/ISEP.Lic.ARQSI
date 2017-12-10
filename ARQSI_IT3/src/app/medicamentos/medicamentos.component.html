@@ -1,0 +1,14 @@
+<div class="medicamentosComponent">
+  <h1> Medicamentos </h1>
+  <div>
+    <ol class="rounded-list">
+      <li *ngFor="let medicamento of medicamentos">
+        <a class="badge">{{medicamento.id}}</a>
+        <ul>
+          <li>{{medicamento.nome}}</li>
+          <li>{{medicamento.concentracao}}</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+</div>

@@ -1,6 +1,15 @@
 .receitasComponent{
-    text-align: center;
+	display: flex;
 }
+
+.receitasList{
+	align-items: left;
+}
+
+.modifications{
+	align-items: right;
+}
+
  /*
 .ac-container{
 	width: 400px;

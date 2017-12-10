@@ -9,15 +9,15 @@
       <a routerLink="/dashboard">Dashboard</a>
       <a *ngIf="userInfo && userInfo.medico" routerLink="/receitas">Receitas</a>
       <a *ngIf="userInfo && userInfo.farmaceutico" routerLink="/prescricoes">Prescricoes</a>
-      <a routerLink="/receitas">Receitas(H)</a>
-      <a routerLink="/prescricoes">Prescricoes(H)</a>
+      <a routerLink="/medicamentos">Medicamentos</a>
+      
       <a>Users(pholder)</a>
-      <a>Medicamentos(pholder)</a>
       <a>Farmacos(pholder)</a>
     </nav>
   </div>
   <div class="fixedLogin">
     <nav>
+      <a *ngIf="!userInfo" routerLink="/signup">SignUp</a>
       <a *ngIf="!userInfo" routerLink="/login">Login</a>
       <a *ngIf="userInfo" routerLink="/login">Logout</a>
     </nav>

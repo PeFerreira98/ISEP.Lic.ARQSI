@@ -1,15 +1,64 @@
+<div>
+  <h1> Receitas
+    <button class="btn btn-new"  (click)="onSelect(receita)" >New Receita</button>
+  </h1>
+</div>
+
+
 <div class="receitasComponent">
-  <h1> Receitas </h1>
-  <div>
+
+  <div class="receitasList">
     <ol class="rounded-list">
-      <li *ngFor="let receita of receitas">
-        <a class="badge">{{receita._id}}</a>
+      <li *ngFor="let receita of receitas" (click)="onSelect(receita)">
+        <a class="badge">receitaID: {{receita._id}}</a>
         <ul>
-          <li>{{receita.prescricoes}}</li>
+          <li *ngFor="let prescricao of receita.prescricoes">
+            <ul>
+              <li>Numero: {{prescricao.numero}}</li>
+              <li>Quantidade: {{prescricao.quantidade}}</li>
+              <li>apresentacaoID: {{prescricao.apresentacaoID}}</li>
+              <li>apresentacao: {{prescricao.apresentacao}}</li>
+            </ul>
+          </li>
         </ul>
       </li>
     </ol>
   </div>
+  <div class="modifications">
+    <div class="createReceita">
+      <h2>Create Receita</h2>
+
+      <form class="form">
+          <label><b>Paciente:</b></label><input #paciente type="text" placeholder="Insert id" name="model.paciente" required><br>
+          
+          <label><b>Prescrições:</b></label><br>   
+          <div class="prescricao">
+            <label><b>Numero:</b></label><input #numero type="text" placeholder="" name="numero" required><br>
+            <label><b>ApresentacaoID:</b></label><input #apresentacaoid type="text" placeholder="Insert id" name="apresentacaoid" required><br>
+            <label><b>Quantidade:</b></label><input #qtdPrescrita type="text" placeholder="" name="qtdPrescrita" required><br>
+            <label><b>Validade:</b></label><input #validade type="text" placeholder="aaaa-mm-dd" name="validade" required><br>
+          
+            <div class="prescricaoBtn">
+              <button (click)="addPrescricao(numero.value, apresentacaoid.value, qtdPrescrita.value, validade.value);
+              numero.value=''; apresentacaoid.value=''; qtdPrescrita.value=''; validade.value=''">Add Prescricao</button>
+            </div>
+          </div>     
+        </form>
+
+      <button class="btn btn-create" (click)="createReceita()">Create Receita</button>
+    </div>
+
+    <div class="editReceita" *ngIf="isSelected()">
+      <h2>Edit Receita</h2>
+      <p>{{selectedReceita._id}}</p>
+      <label>Date:
+        <input [(ngModel)]="selectedReceita.data" placeholder="date">
+      </label>
+      <button class="btn btn-edit" (click)="alterReceita()">Edit Receita</button>
+    </div>
+  </div>
+
+
 </div>
 
 <!--
