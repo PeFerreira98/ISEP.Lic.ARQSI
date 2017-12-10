@@ -1,0 +1,11 @@
+.receitasFarmaceutico{
+    display: flex;
+}
+
+.searchSect{
+	align-items: left;
+}
+
+.aviamento{
+    align-items: right;
+}

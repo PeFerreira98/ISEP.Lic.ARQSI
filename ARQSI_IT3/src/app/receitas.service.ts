@@ -42,8 +42,9 @@ export class ReceitasService {
     });
   }
 
-  aviar(receitaId : string, prescricaoNr : Number, quantidade : Number) : Observable<any>{
-    var link = this.receitasUrl + receitaId + '/prescricao/' + prescricaoNr + '/aviar/' + quantidade;
+  aviar(receitaId : string, prescricaoNr : number, quantidade : string) : Observable<any>{
+    var newprescnr = prescricaoNr-1;
+    var link = this.receitasUrl + receitaId + '/prescricao/' + newprescnr + '/aviar/' + quantidade;
 
     return this.http.put(link, this.getHeaders());
   }

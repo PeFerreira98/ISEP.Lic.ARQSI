@@ -18,32 +18,64 @@
               <li>Quantidade: {{prescricao.quantidade}}</li>
               <li>apresentacaoID: {{prescricao.apresentacaoID}}</li>
               <li>apresentacao: {{prescricao.apresentacao}}</li>
+              <li *ngFor="let aviamento of prescricao.aviamentos">
+                <ul>
+                  <li>farmaceutico: {{aviamento.farmaceutico}}</li>
+                  <li>data: {{aviamento.data}}</li>
+                  <li>quantidade: {{aviamento.quantidade}}</li>
+                  <li>id: {{aviamento._id}}</li>
+                </ul>
+              </li>
             </ul>
           </li>
         </ul>
       </li>
     </ol>
   </div>
+
   <div class="modifications">
     <div class="createReceita">
       <h2>Create Receita</h2>
 
       <form class="form">
-          <label><b>Paciente:</b></label><input #paciente type="text" placeholder="Insert id" name="model.paciente" required><br>
-          
-          <label><b>Prescrições:</b></label><br>   
-          <div class="prescricao">
-            <label><b>Numero:</b></label><input #numero type="text" placeholder="" name="numero" required><br>
-            <label><b>ApresentacaoID:</b></label><input #apresentacaoid type="text" placeholder="Insert id" name="apresentacaoid" required><br>
-            <label><b>Quantidade:</b></label><input #qtdPrescrita type="text" placeholder="" name="qtdPrescrita" required><br>
-            <label><b>Validade:</b></label><input #validade type="text" placeholder="aaaa-mm-dd" name="validade" required><br>
-          
-            <div class="prescricaoBtn">
-              <button (click)="addPrescricao(numero.value, apresentacaoid.value, qtdPrescrita.value, validade.value);
+        <label>
+          <b>Paciente:</b>
+        </label>
+        <input #paciente type="text" placeholder="Insert id" name="model.paciente" required>
+        <br>
+
+        <label>
+          <b>Prescrições:</b>
+        </label>
+        <br>
+        <div class="prescricao">
+          <label>
+            <b>Numero:</b>
+          </label>
+          <input #numero type="text" placeholder="" name="numero" required>
+          <br>
+          <label>
+            <b>ApresentacaoID:</b>
+          </label>
+          <input #apresentacaoid type="text" placeholder="Insert id" name="apresentacaoid" required>
+          <br>
+          <label>
+            <b>Quantidade:</b>
+          </label>
+          <input #qtdPrescrita type="text" placeholder="" name="qtdPrescrita" required>
+          <br>
+          <label>
+            <b>Validade:</b>
+          </label>
+          <input #validade type="text" placeholder="aaaa-mm-dd" name="validade" required>
+          <br>
+
+          <div class="prescricaoBtn">
+            <button (click)="addPrescricao(numero.value, apresentacaoid.value, qtdPrescrita.value, validade.value);
               numero.value=''; apresentacaoid.value=''; qtdPrescrita.value=''; validade.value=''">Add Prescricao</button>
-            </div>
-          </div>     
-        </form>
+          </div>
+        </div>
+      </form>
 
       <button class="btn btn-create" (click)="createReceita()">Create Receita</button>
     </div>

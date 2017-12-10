@@ -4,26 +4,53 @@
 
 <div class="receitasFarmaceutico">
 
-  <div class="search">
-    <label>
-      <b>receitaid:</b>
-    </label>
-    <input #receitaid type="text" placeholder="" name="receitaid" required>
-    <button (click)="search(receitaid.value); receitaid.value='' ">Search</button>
+  <div class="searchSect">
+    <div class="search">
+      <label>
+        <b>receitaid:</b>
+      </label>
+      <input #receitaid type="text" placeholder="" name="receitaid" required>
+      <button (click)="search(receitaid.value); receitaid.value='' ">Search</button>
+    </div>
+
+    <p></p>
+
+    <div class="searchResult" *ngIf="isSelected()">
+      <a class="badge">receitaID: {{selectedReceita._id}}</a>
+      <li *ngFor="let prescricao of selectedReceita.prescricoes">
+        <ul>
+          <li>id: {{prescricao._id}}</li>
+          <li>Numero: {{prescricao.numero}}</li>
+          <li>Quantidade: {{prescricao.quantidade}}</li>
+          <li>apresentacaoID: {{prescricao.apresentacaoID}}</li>
+          <li>apresentacao: {{prescricao.apresentacao}}</li>
+          <li *ngFor="let aviamento of prescricao.aviamentos">
+            <ul>
+              <li>farmaceutico: {{aviamento.farmaceutico}}</li>
+              <li>data: {{aviamento.data}}</li>
+              <li>quantidade: {{aviamento.quantidade}}</li>
+              <li>id: {{aviamento._id}}</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </div>
   </div>
 
-  <p></p>
-
-  <div class="searchResult" *ngIf="isSelected()">
-    <a class="badge">receitaID: {{selectedReceita._id}}</a>
-    <li *ngFor="let prescricao of selectedReceita.prescricoes">
-      <ul>
-        <li>Numero: {{prescricao.numero}}</li>
-        <li>Quantidade: {{prescricao.quantidade}}</li>
-        <li>apresentacaoID: {{prescricao.apresentacaoID}}</li>
-        <li>apresentacao: {{prescricao.apresentacao}}</li>
-      </ul>
-    </li>
+  <div class="aviamento">
+    <p>
+      <label>
+        <b>numero prescricao:</b>
+      </label>
+      <input #prescricaonr type="text" placeholder="" name="prescricaonr" required>
+    </p>
+    <p>
+      <label>
+        <b>quantidade a aviar:</b>
+      </label>
+      <input #quantidade type="text" placeholder="" name="quantidade" required>
+    </p>
+    <button (click)="aviar(prescricaonr.value, quantidade.value); prescricaonr.value=''; quantidade.value='' ">Aviar</button>
   </div>
-  
+
 </div>

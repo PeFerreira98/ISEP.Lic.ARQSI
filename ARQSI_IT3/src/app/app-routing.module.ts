@@ -8,11 +8,13 @@ import { PrescricoesComponent } from './prescricoes/prescricoes.component';
 import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ReceitasfarmaceuticoComponent } from './receitasfarmaceutico/receitasfarmaceutico.component';
+import { ApresentacoesComponent } from './apresentacoes/apresentacoes.component';
 
 import { AuthGuard } from './guards/auth.guard';
 import { MedicoGuard } from './guards/medico.guard';
 import { FarmaceuticoGuard } from './guards/farmaceutico.guard';
 import { UtenteGuard } from './guards/utente.guard';
+
 
 
 const routes: Routes = [
@@ -25,6 +27,7 @@ const routes: Routes = [
   { path: 'receitasfarmaceutico', component: ReceitasfarmaceuticoComponent },
   { path: 'prescricoes', component: PrescricoesComponent },
   { path: 'medicamentos', component: MedicamentosComponent }
+  { path: 'apresentacoes', component: ApresentacoesComponent }
 ];
 
 @NgModule({

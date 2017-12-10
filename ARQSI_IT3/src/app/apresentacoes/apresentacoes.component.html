@@ -1,0 +1,16 @@
+<div class="apresentacoesComponent">
+    <h1> Apresentacoes </h1>
+    <div>
+      <ol class="rounded-list">
+        <li *ngFor="let apresentacao of apresentacoes">
+          <a class="badge">{{apresentacao.medicamentoNome}}</a>
+          <ul>
+            <li>{{apresentacao.forma}}</li>
+            <li>{{apresentacao.medicamentoConcentracao}}</li>
+            <li>{{apresentacao.posologiaQuantidade}}</li>
+            <li>{{apresentacao.farmacoNome}}</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>

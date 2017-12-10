@@ -33,6 +33,17 @@ export class ReceitasfarmaceuticoComponent implements OnInit {
     .subscribe(receita => this.selectedReceita = receita);    
   }
 
+  aviar(prescricaonr : number, quantidade: string) : any{
+    this.receitaService.aviar(this.selectedReceita._id, prescricaonr, quantidade)
+    .subscribe(result => {
+      if (result === true) {
+        this.router.navigate(['/receitafarmaceutico']);
+      } else {
+        this.error = 'Error Ocurred';
+      }
+    });
+  }
+
   onSelect(receita: Receita): void {
     this.selectedReceita = receita;
   }

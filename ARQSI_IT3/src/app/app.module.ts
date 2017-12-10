@@ -13,12 +13,14 @@ import { PrescricoesComponent }  from './prescricoes/prescricoes.component';
 import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { SignUpComponent }       from './sign-up/sign-up.component';
 import { ReceitasfarmaceuticoComponent } from './receitasfarmaceutico/receitasfarmaceutico.component';
+import { ApresentacoesComponent } from './apresentacoes/apresentacoes.component';
 
 import { ReceitasService }       from './receitas.service';
 import { PrescricoesService }    from './prescricoes.service';
 import { MedicamentosService }   from './medicamentos.service';
 import { AuthenticationService } from './authentication.service';
 import { SignUpService }         from './sign-up.service';
+import { ApresentacoesService }  from './apresentacoes.service';
 
 import { AuthGuard }             from './guards/auth.guard';
 import { MedicoGuard }           from './guards/medico.guard';
@@ -34,7 +36,8 @@ import { UtenteGuard }           from './guards/utente.guard';
     PrescricoesComponent,
     MedicamentosComponent,
     SignUpComponent,
-    ReceitasfarmaceuticoComponent
+    ReceitasfarmaceuticoComponent,
+    ApresentacoesComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,8 @@ import { UtenteGuard }           from './guards/utente.guard';
     ReceitasService,
     PrescricoesService,
     MedicamentosService,
-    SignUpService
+    SignUpService,
+    ApresentacoesService
    ],
   bootstrap: [
     AppComponent
