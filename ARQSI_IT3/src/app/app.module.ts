@@ -12,6 +12,7 @@ import { ReceitasComponent }     from './receitas/receitas.component';
 import { PrescricoesComponent }  from './prescricoes/prescricoes.component';
 import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { SignUpComponent }       from './sign-up/sign-up.component';
+import { ReceitasfarmaceuticoComponent } from './receitasfarmaceutico/receitasfarmaceutico.component';
 
 import { ReceitasService }       from './receitas.service';
 import { PrescricoesService }    from './prescricoes.service';
@@ -32,7 +33,8 @@ import { UtenteGuard }           from './guards/utente.guard';
     ReceitasComponent,
     PrescricoesComponent,
     MedicamentosComponent,
-    SignUpComponent
+    SignUpComponent,
+    ReceitasfarmaceuticoComponent
   ],
   imports: [
     BrowserModule,

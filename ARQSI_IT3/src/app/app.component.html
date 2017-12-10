@@ -8,6 +8,7 @@
     <nav>
       <a routerLink="/dashboard">Dashboard</a>
       <a *ngIf="userInfo && userInfo.medico" routerLink="/receitas">Receitas</a>
+      <a *ngIf="userInfo && userInfo.farmaceutico" routerLink="/receitasfarmaceutico">Receitas</a>
       <a *ngIf="userInfo && userInfo.farmaceutico" routerLink="/prescricoes">Prescricoes</a>
       <a routerLink="/medicamentos">Medicamentos</a>
       

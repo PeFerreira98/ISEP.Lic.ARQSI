@@ -77,6 +77,10 @@ export class ReceitasService {
     return this.http.get<Receita[]>(this.receitasUrl, this.getHeaders());
   }
 
+  getReceitaByID(id : string): Observable<Receita> {
+    return this.http.get<Receita>(this.receitasUrl + id, this.getHeaders());
+  }
+
   getHeaders() {
     console.log(this.authenticationService.userInfo.token);
     
