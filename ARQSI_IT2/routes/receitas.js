@@ -10,6 +10,20 @@ var smtp2go = require('../smtp2go');
 
 var router = express.Router();
 
+// (GET <site>/api/receita/apresentacao/:id)
+router.get('/apresentacao/:apresentacaoID', function (req, res, next) {
+    request(
+        { uri: Config.IT1 + '/apresentacao/' + req.params.apresentacaoID }
+    ).pipe(res);
+});
+
+// (GET <site>/api/receita/apr/)
+router.get('/apr/', function (req, res, next) {
+    request(
+        { uri: Config.IT1 + '/apresentacao' }
+    ).pipe(res);
+});
+
 // (GET <site>/api/receita)
 router.get('/', VerifyToken, function (req, res) {
     Receita.find(function (err, receitas) {
@@ -90,13 +104,6 @@ router.put('/:receita_id', function (req, res) {
             });
         }
     });
-});
-
-// (GET <site>/api/receita/apresentacao/:id)
-router.get('/apresentacao/:apresentacaoID', function (req, res, next) {
-    request(
-        { uri: Config.IT1 + '/apresentacao/' + req.params.apresentacaoID }
-    ).pipe(res);
 });
 
 function eachAsync(prescricoesArray, res, receita, func) {

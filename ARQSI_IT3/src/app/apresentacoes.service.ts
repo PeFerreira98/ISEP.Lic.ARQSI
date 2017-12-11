@@ -6,7 +6,7 @@ import { Apresentacao } from '../models/apresentacao';
 
 @Injectable()
 export class ApresentacoesService {
-  private apresentacoesUrl = 'http://arqsiit2.azurewebsites.net/api/receita/apresentacao/';
+  private apresentacoesUrl = 'http://arqsiit2.azurewebsites.net/api/receita/apr/';
 
   constructor(private http: HttpClient) { }
 
