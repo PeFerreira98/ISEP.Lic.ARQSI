@@ -52,7 +52,7 @@ export class ReceitasComponent implements OnInit {
     this.lstPrescricoes = [];
   }
 
-  addPrescricao(numero: string, apresentacaoid: string, validade: string, qtdPrescrita: string) {
+  addPrescricao(numero : string, apresentacaoid : string, qtdPrescrita : string, validade : string) {
 
     let prescricao = {
       numero: numero,

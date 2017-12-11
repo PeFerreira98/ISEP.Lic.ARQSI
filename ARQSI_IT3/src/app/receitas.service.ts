@@ -14,15 +14,13 @@ export class ReceitasService {
     private authenticationService: AuthenticationService
   ) { }
 
-  createReceita( paciente: string, lstPrescricoes: Prescricao[] ): Observable<boolean> {
+  createReceita(pacienteid: string, lstPrescricoes: any): Observable<boolean> {
+    console.log(pacienteid + ' ' + lstPrescricoes);
     return new Observable<boolean>(observer => {
-      this.http.post<Receita>(this.receitasUrl + 'test/' + '?token=' + this.authenticationService.userInfo.token, 
-        { paciente: String,
-          prescricoes: lstPrescricoes
-        })
+      this.http.post<any>(this.receitasUrl, { paciente: pacienteid, prescricoes: lstPrescricoes }, this.getHeaders())
         .subscribe(data => {
-          console.log(data._id);
-          if (data._id) {
+          console.log(data);
+          if (data) {
             observer.next(true);
           } else {
             observer.next(false);
@@ -42,19 +40,17 @@ export class ReceitasService {
     });
   }
 
-  aviar(receitaId : string, prescricaoNr : number, quantidade : string) : Observable<any>{
-    var newprescnr = prescricaoNr-1;
+  aviar(receitaId: string, prescricaoNr: number, quantidade: string): Observable<any> {
+    var newprescnr = prescricaoNr - 1;
     var link = this.receitasUrl + receitaId + '/prescricao/' + newprescnr + '/aviar/' + quantidade;
 
-    return this.http.put(link, this.getHeaders());
+    return this.http.put<any>(link, {}, this.getHeaders());
   }
-
 
   alterReceita(_id: String, ndata: Date): Observable<boolean> {
     return new Observable<boolean>(observer => {
-      this.http.put<Receita>(this.receitasUrl + _id + '?token=' + this.authenticationService.userInfo.token, { data:ndata })
+      this.http.put<Receita>(this.receitasUrl + _id + '?token=' + this.authenticationService.userInfo.token, { data: ndata })
         .subscribe(data => {
-          console.log(data + ' ' + ndata);
           if (data) {
             observer.next(true);
           } else {
@@ -78,13 +74,13 @@ export class ReceitasService {
     return this.http.get<Receita[]>(this.receitasUrl, this.getHeaders());
   }
 
-  getReceitaByID(id : string): Observable<Receita> {
+  getReceitaByID(id: string): Observable<Receita> {
     return this.http.get<Receita>(this.receitasUrl + id, this.getHeaders());
   }
 
   getHeaders() {
     console.log(this.authenticationService.userInfo.token);
-    
+
     let headers = new HttpHeaders({
       'x-access-token': this.authenticationService.userInfo.token
     });

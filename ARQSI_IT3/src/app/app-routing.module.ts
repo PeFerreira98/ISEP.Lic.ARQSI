@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'receitas', component: ReceitasComponent },
   { path: 'receitasfarmaceutico', component: ReceitasfarmaceuticoComponent },
   { path: 'prescricoes', component: PrescricoesComponent },
-  { path: 'medicamentos', component: MedicamentosComponent }
+  { path: 'medicamentos', component: MedicamentosComponent },
   { path: 'apresentacoes', component: ApresentacoesComponent }
 ];
 

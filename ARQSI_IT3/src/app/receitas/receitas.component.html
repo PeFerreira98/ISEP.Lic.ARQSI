@@ -41,7 +41,7 @@
         <label>
           <b>Paciente:</b>
         </label>
-        <input #paciente type="text" placeholder="Insert id" name="model.paciente" required>
+        <input name="paciente" [(ngModel)]="model.paciente" #paciente="ngModel" type="text" placeholder="Insert id" required>
         <br>
 
         <label>
