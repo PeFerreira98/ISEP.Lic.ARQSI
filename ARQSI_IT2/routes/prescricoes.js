@@ -8,10 +8,9 @@ var VerifyToken = require('../auth/verifyToken');
 var VerifyRole = require('../auth/verifyRole');
 var smtp2go = require('../smtp2go');
 
-// on routes that end in /api/receitas/ ----------------------
 var router = express.Router();
 
-// get prescricoes (GET <site>/api/receitas/:id/prescricao)
+// (GET <site>/api/receitas/:id/prescricao)
 router.get('/:receita_id/prescricao', function (req, res) {
     Receita.findById(req.params.receita_id, function (err, receita) {
         if (err) res.send(err);
@@ -19,7 +18,7 @@ router.get('/:receita_id/prescricao', function (req, res) {
     });
 });
 
-// get prescricao (GET <site>/api/receitas/:id1/prescricao/:id2)
+// (GET <site>/api/receitas/:id1/prescricao/:id2)
 router.get('/:receita_id/prescricao/:presc_id', function (req, res) {
     Receita.findById(req.params.receita_id, function (err, receita) {
         if (err) res.send(err);
@@ -34,7 +33,7 @@ router.get('/:receita_id/prescricao/:presc_id', function (req, res) {
     });
 });
 
-// aviar prescricao (PUT <site>/api/receitas/:id1/prescricao/:id2/aviar/:qtd)
+// (PUT <site>/api/receita/:id1/prescricao/:nr/aviar/:qtd)
 router.put('/:receita_id/prescricao/:presc_id/aviar/:quant', VerifyToken, function (req, res) {
     VerifyRole.verifyRole(req.user, 'farmaceutico', function (decision) {
         if (!decision) {

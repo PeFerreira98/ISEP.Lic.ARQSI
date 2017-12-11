@@ -8,18 +8,9 @@ var VerifyRole = require('../auth/verifyRole');
 var Receita = require('../models/receita');
 var smtp2go = require('../smtp2go');
 
-// on routes that end in /api/user ----------------------
 var router = express.Router();
 
-//test purposes (GET <site>/api/user/test)
-router.get('/test', function (req, res) {
-    User.find(function (err, users) {
-        if (err) res.send(err);
-        res.json(users);
-    });
-});
-
-//list all Users (GET <site>/api/user)
+// (GET <site>/api/user)
 router.get('/', VerifyToken, function (req, res) {
   VerifyRole.verifyRole(req.user, 'medico', function (decision) {
     if (!decision) {
@@ -29,14 +20,14 @@ router.get('/', VerifyToken, function (req, res) {
     }
 
     User.find(function (err, users) {
-        if (err) res.send(err);
-        res.json(users);
+      if (err) res.send(err);
+      res.json(users);
     });
 
   });
 });
 
-//register User (POST <site>/api/user/register)
+// (POST <site>/api/user/register)
 router.post('/register', function (req, res) {
   var user = new User();
   user.name = req.body.name;
@@ -47,13 +38,13 @@ router.post('/register', function (req, res) {
   user.paciente = req.body.paciente;
 
   user.save(function (err) {
-      console.log("Saving User...");
-      if (err) return res.status(500).send("Problem Registering User.");
-      res.json({ message: 'User Registered!' });
+    console.log("Saving User...");
+    if (err) return res.status(500).send("Problem Registering User.");
+    res.json({ message: 'User Registered!' });
   });
 });
 
-//login User (POST <site>/api/user/login)
+// (POST <site>/api/user/login)
 router.post('/login', function (req, res) {
 
   User.findOne({
@@ -67,7 +58,7 @@ router.post('/login', function (req, res) {
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
         if (!passwordIsValid) {
-            return res.status(401).send({ auth: false, token: null, message: 'Authentication Failed. Check Password.' });
+          return res.status(401).send({ auth: false, token: null, message: 'Authentication Failed. Check Password.' });
         }
         else {
           const payload = {
@@ -85,7 +76,7 @@ router.post('/login', function (req, res) {
     });
 });
 
-//prescricoes user (GET <site>/api/user/:user_id/prescricao/poraviar)
+// (GET <site>/api/user/:user_id/prescricao/poraviar)
 router.get('/:user_id/prescricao/poraviar', function (req, res) {
   User.findById(req.params.user_id, function (err, user) {
     if (err) res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);

@@ -1,4 +1,4 @@
-var express = require('express');
+﻿var express = require('express');
 var HttpStatus = require('http-status-codes');
 var request = require('request');
 var Config = require('../config');
@@ -8,11 +8,18 @@ var VerifyToken = require('../auth/verifyToken');
 var VerifyRole = require('../auth/verifyRole');
 var smtp2go = require('../smtp2go');
 
-// on routes that end in /api/receitas ----------------------
 var router = express.Router();
 
-// add Receita (POST <site>/api/receitas)<
-router.post('/test', VerifyToken, function (req, res) {
+// (GET <site>/api/receita)
+router.get('/', VerifyToken, function (req, res) {
+    Receita.find(function (err, receitas) {
+        if (err) res.send(err);
+        res.json(receitas);
+    });
+});
+
+// (POST <site>/api/receita)
+router.post('/', VerifyToken, function (req, res) {
     VerifyRole.verifyRole(req.user, 'medico', function (decision) {
         if (!decision) {
             return res.status(403).send({
@@ -52,6 +59,44 @@ router.post('/test', VerifyToken, function (req, res) {
                 }
             })
     });
+});
+
+// (GET <site>/api/receita/:id)
+router.get('/:receita_id', function (req, res) {
+    Receita.findById(req.params.receita_id, function (err, receita) {
+        if (err) res.send(err);
+        res.json(receita);
+    });
+});
+
+// (PUT <site>/api/receita/:id)
+router.put('/:receita_id', function (req, res) {
+    Receita.findById(req.params.receita_id, function (err, receita) {
+        if (err) {
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
+        } if (receita == null) {
+            res.status(HttpStatus.BAD_REQUEST).json({ message: "Receita não encontrada" });
+        } else if (checkAviamentos(receita)) {
+            res.status(HttpStatus.FORBIDDEN).json({ message: "Receita já aviada" });
+        } else {
+
+            if (req.body.data != null) {
+                receita.data = new Date(req.body.data);
+            }
+
+            receita.save(function (err) {
+                if (err) res.send(err);
+                res.json({ message: 'Receita updated!' });
+            });
+        }
+    });
+});
+
+// (GET <site>/api/receita/apresentacao/:id)
+router.get('/apresentacao/:apresentacaoID', function (req, res, next) {
+    request(
+        { uri: Config.IT1 + '/apresentacao/' + req.params.apresentacaoID }
+    ).pipe(res);
 });
 
 function eachAsync(prescricoesArray, res, receita, func) {
@@ -108,59 +153,6 @@ function sendEmail(userID, receitaID) {
         }
     )
 }
-
-
-router.get('/apresentacao/:apresentacaoID', function (req, res, next) {
-    request(
-        { uri: Config.IT1 + '/apresentacao/' + req.params.apresentacaoID }
-    ).pipe(res);
-});
-
-// get all the Receitas
-router.get('/', VerifyToken, function (req, res) {
-    Receita.find(function (err, receitas) {
-        if (err) res.send(err);
-        res.json(receitas);
-    });
-});
-
-router.get('/test', function (req, res) {
-    Receita.find(function (err, receitas) {
-        if (err) res.send(err);
-        res.json(receitas);
-    });
-});
-
-// get the receita with that id
-router.get('/:receita_id', function (req, res) {
-    Receita.findById(req.params.receita_id, function (err, receita) {
-        if (err) res.send(err);
-        res.json(receita);
-    });
-});
-
-// update the receita with this id
-router.put('/:receita_id', function (req, res) {
-    Receita.findById(req.params.receita_id, function (err, receita) {
-        if (err) {
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-        } if (receita == null) {
-            res.status(HttpStatus.BAD_REQUEST).json({ message: "Receita não encontrada" });
-        } else if (checkAviamentos(receita)) {
-            res.status(HttpStatus.FORBIDDEN).json({ message: "Receita já aviada" });
-        } else {
-
-            if (req.body.data != null) {
-                receita.data = new Date(req.body.data);
-            }
-
-            receita.save(function (err) {
-                if (err) res.send(err);
-                res.json({ message: 'Receita updated!' });
-            });
-        }
-    });
-});
 
 function checkAviamentos(receita) {
     for (var i = 0; i < receita.prescricoes.length; i++) {
